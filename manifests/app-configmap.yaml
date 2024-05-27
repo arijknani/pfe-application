@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: app-configmap-docker
+  name: app-configmap
 data:
-  db-url: jdbc:mysql://mysql-docker:3306/appdb_docker
+  db-url: jdbc:mysql://mysql:3306/pfe_app
   app-profile: prod
