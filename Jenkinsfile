@@ -1,6 +1,6 @@
 
 @Library('deploy-openshift-library') _
-def config = [openshift_project: 'arij-project', app_name: 'shared-library', quay_repo: 'arijknani', image_name:'library-app' ]
+def config = [openshift_project: 'arij-project', app_name: 'my-app-library', quay_repo: 'arijknani', image_name:'my-app-library' ]
 pipeline {    
     agent {
         kubernetes {
@@ -10,7 +10,7 @@ pipeline {
     environment { 
         repo_url= 'https://github.com/arijknani/containerized-app.git'
         quay_repo= 'arijknani'
-        image_name= 'library-app'
+        image_name= 'my-app-library'
         QUAY_CREDS= credentials('quay_creds')
         openshift_url= 'https://api.ocp.smartek.ae:6443'
     }
