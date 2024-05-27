@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "4"
+    image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"springboot-docker:latest"},"fieldPath":"spec.template.spec.containers[?(@.name==\"springboot-docker\")].image"}]'
+    openshift.io/generated-by: OpenShiftNewApp
+  creationTimestamp: "2024-03-15T17:04:08Z"
+  generation: 4
+  labels:
+    app: springboot-docker
+    app.kubernetes.io/component: springboot-docker
+    app.kubernetes.io/instance: springboot-docker
+  name: springboot-docker
+  namespace: arij-project
+  resourceVersion: "10909805"
+  uid: 68f2ecc1-d955-450e-b992-3058533a4615
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      deployment: springboot-docker
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+      creationTimestamp: null
+      labels:
+        deployment: springboot-docker
+    spec:
+      containers:
+      - env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: db-password
+              name: app-secrets
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: db-username
+              name: app-secrets
+        - name: APP_PROFILE
+          valueFrom:
+            configMapKeyRef:
+              key: app-profile
+              name: app-configmap-docker
+        - name: DB_URL
+          valueFrom:
+            configMapKeyRef:
+              key: db-url
+              name: app-configmap-docker
+        image: image-registry.openshift-image-registry.svc:5000/arij-project/springboot-docker@sha256:1cdb8edcba482d1892874ac4864620f0af736ae33ad15f53cb4cff00ed1ee201
+        imagePullPolicy: IfNotPresent
+        name: springboot-docker
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+
