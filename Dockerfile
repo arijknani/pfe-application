@@ -1,6 +1,8 @@
 FROM registry.access.redhat.com/ubi8/openjdk-17:1.19-4.1715070735 AS build
 ENV home=/home/app
 WORKDIR ${home}
+COPY pom.xml ${home}/
+RUN mvn dependency:go-offline -B
 RUN mkdir -p ${home}/target/classes
 COPY . ${home}/
 RUN mvn package -Dmaven.test.skip=true
