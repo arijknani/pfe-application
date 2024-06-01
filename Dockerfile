@@ -5,7 +5,7 @@ COPY pom.xml .
 RUN mvn dependency:go-offline 
 USER root
 COPY . .
-RUN mvn package -Dmaven.test.skip=true
+RUN mvn install -Dmaven.test.skip=true
 
 
 FROM registry.access.redhat.com/ubi8/openjdk-17:1.19-4.1715070735
