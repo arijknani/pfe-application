@@ -3,7 +3,7 @@ ENV home=/home/app
 WORKDIR ${home}
 COPY pom.xml ${home}/
 RUN mvn dependency:go-offline -B
-RUN mkdir -p ${home}/target/classes
+#RUN mkdir -p ${home}/target/classes
 COPY . ${home}/
 RUN mvn package -Dmaven.test.skip=true
 
