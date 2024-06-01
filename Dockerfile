@@ -1,11 +1,10 @@
 FROM registry.access.redhat.com/ubi8/openjdk-17:1.19-4.1715070735 AS build
 ENV home=/home/app
 WORKDIR ${home}
-ADD pom.xml ${home}/
-RUN mvn verify clean
-#RUN mvn dependency:go-offline -B
+COPY pom.xml .
+RUN mvn dependency:go-offline 
 USER root
-COPY . ${home}/
+COPY . .
 RUN mvn package -Dmaven.test.skip=true
 
 
