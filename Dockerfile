@@ -1,8 +1,8 @@
 FROM registry.access.redhat.com/ubi8/openjdk-17:1.19-4.1715070735 AS build
 ENV home=/home/app
 WORKDIR ${home}
-COPY pom.xml ${home}/
-RUN mvn verify --fail-never
+ADD pom.xml ${home}/
+RUN mvn verify clean
 #RUN mvn dependency:go-offline -B
 USER root
 COPY . ${home}/
